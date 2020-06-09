@@ -19,26 +19,7 @@ import pprint
 import pickle
 from werkzeug import secure_filename
 
-SCOPES = ['https://www.googleapis.com/auth/drive']
-SERVICE_ACCOUNT_FILE = 'D:\projectPython\FlaskWeb\FlaskWeb\FlaskWeb\credentials.json'
 
-creds = None
-   
-if os.path.exists('token.pickle'):
-    with open('token.pickle', 'rb') as token:
-        creds = pickle.load(token)
-   
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file('D:\projectPython\FlaskWeb\FlaskWeb\FlaskWeb\credentials.json', SCOPES)
-        creds = flow.run_local_server(port=0)
-       
-    with open('token.pickle', 'wb') as token:
-        pickle.dump(creds, token)
-
-service = build('drive', 'v3', credentials = creds)
 
 
 app.config['SECRET_KEY'] = 'fuck_flask_and_other_python_shit'
@@ -164,6 +145,28 @@ def contact():
     """Renders the contact page."""    
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
+
+    SCOPES = ['https://www.googleapis.com/auth/drive']
+    SERVICE_ACCOUNT_FILE = 'D:\projectPython\FlaskWeb\FlaskWeb\FlaskWeb\credentials.json'
+
+    creds = None
+   
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+   
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file('D:\projectPython\FlaskWeb\FlaskWeb\FlaskWeb\credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+       
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    service = build('drive', 'v3', credentials = creds)
+
 
     results = service.files().list(
         pageSize=200, fields="nextPageToken, files(id, name)").execute()
