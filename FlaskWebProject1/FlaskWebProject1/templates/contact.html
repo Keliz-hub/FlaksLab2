@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+<form action="{{ url_for('uploader') }}" method="POST"
+      enctype="multipart/form-data">
+    <h>Upload file to the cloud</h><br />
+    <input type="file" name="file" /><br />
+    <input type="submit" /><br />
+</form>
+<br />
+<br />
+
+<form action="{{ url_for('loader') }}" method="POST"
+      enctype="multipart/form-data">
+    <h>Download file by name</h><br />
+    <input type="text" name="id"/><br /><br />
+    <input type="text" name="name"/><br /><br />
+    <input type="submit" />
+</form>
+<br />
+
+{% for item in items %}
+<div><p><b>{{ item.name }}:</b> {{ item.id }}</p></div>
+{% endfor %}
+
+
+{% endblock %}

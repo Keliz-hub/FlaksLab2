@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Flask</h1>
+</div>
+
+<form name="postForm" action="/messagePost/" method="post">
+    <button name="postBtn" type="submit">Post</button>
+    <input name="inputText" />
+</form>
+
+{% for post in posts %}
+<div><p><b>{{ post.user }}:</b> {{ post.message }}</p></div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,34 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>Aвторизация</h1>
+<form action="" method="post" novalidate>
+    {{form.hidden_tag()}}
+    <p>
+        {{ form.username.label }}<br>
+        {{ form.username }}<br>
+        {% for error in form.username.errors %}
+        {{ error }}
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password }}<br>
+        {% for error in form.password.errors %}
+        {{ error }}
+        {% endfor %}
+    </p>
+
+    <small>
+        {{ form.remember_me }} {{ form.remember_me.label }}
+    </small>
+    <p> {{ form.submit() }} </p>
+
+</form>
+
+<form action="/registration/" method="post">
+    <button name="forwardBtn" type="submit">Registration</button>
+</form>
+
+{% endblock %}
